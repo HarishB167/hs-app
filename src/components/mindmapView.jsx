@@ -1,9 +1,15 @@
-import React from "react";
-import { getMindmapWithId } from "../services/fakeMindmapService";
+import React, { useState } from "react";
+import {
+  getMindmapWithId,
+  incrementRevisions,
+} from "../services/fakeMindmapService";
+import Badge from "./common/badge";
 import Card from "./common/card";
 
 const MindmapView = (props) => {
-  const mindmap = getMindmapWithId(props.match.params.id);
+  const [mindmap, setMindmap] = useState(
+    getMindmapWithId(props.match.params.id)
+  );
   console.log(mindmap);
 
   const rows = [];
@@ -19,6 +25,13 @@ const MindmapView = (props) => {
   console.log("array is ", rows);
   return (
     <div className="container">
+      <div className="row">
+        <Badge
+          label="Revisions"
+          value={mindmap.revisions}
+          onClick={() => setMindmap({ ...incrementRevisions(mindmap._id) })}
+        />
+      </div>
       <div className="row justify-content-center">
         <div className="col-4">
           <div className="tile orange">

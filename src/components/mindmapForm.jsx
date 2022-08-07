@@ -25,6 +25,7 @@ class MindmapForm extends Form {
     _id: Joi.optional(),
     title: Joi.string().required().label("Title"),
     category: Joi.string().required().label("Category"),
+    revisions: Joi.number().min(0).label("Revisions"),
     branches: Joi.array().items(
       Joi.object({
         _id: Joi.optional(),
@@ -51,6 +52,7 @@ class MindmapForm extends Form {
       data.title = mindmap.title;
       data.category = mindmap.category;
       data.branches = [...mindmap.branches];
+      data.revisions = mindmap.revisions;
     }
     this.setState({
       pageType,
@@ -65,6 +67,7 @@ class MindmapForm extends Form {
       title: this.state.data.title,
       category: this.state.data.category,
       branches: this.state.data.branches,
+      revisions: this.state.data.revisions,
     };
     saveMindmap(mindmap);
     this.props.history.replace("/mindmaps");
@@ -171,6 +174,7 @@ class MindmapForm extends Form {
               {this.renderSubmit("Save")}
               {this.renderInput("title", "Title")}
               {this.renderInput("category", "Category")}
+              {this.renderInput("revisions", "Revisions", "number")}
             </div>
             <div className="col">
               <BranchForm

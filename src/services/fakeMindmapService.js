@@ -11,6 +11,7 @@ const mindmaps = [
     _id: "1",
     title: "Django overview",
     category: "Django",
+    revisions: 0,
     branches: [
       {
         _id: "1",
@@ -97,6 +98,7 @@ const mindmaps = [
     _id: "2",
     title: "Fundamentals",
     category: "Django",
+    revisions: 0,
     branches: [
       {
         _id: "1",
@@ -150,6 +152,7 @@ export function saveMindmap(mindmap) {
   mindmapInDb.title = mindmap.title;
   mindmapInDb.category = mindmap.category;
   mindmapInDb.branches = mindmap.branches;
+  mindmapInDb.revisions = mindmap.revisions;
   console.log(mindmapInDb);
 
   if (!mindmapInDb._id) {
@@ -164,5 +167,11 @@ export function saveMindmap(mindmap) {
 export function deleteMindmap(id) {
   let mindmapInDb = mindmaps.find((m) => m._id === id);
   mindmaps.splice(mindmaps.indexOf(mindmapInDb), 1);
+  return mindmapInDb;
+}
+
+export function incrementRevisions(id) {
+  let mindmapInDb = mindmaps.find((m) => m._id === id) || {};
+  mindmapInDb.revisions = parseInt(mindmapInDb.revisions) + 1;
   return mindmapInDb;
 }

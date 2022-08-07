@@ -13,6 +13,7 @@ const MindmapTable = (props) => {
       ),
     },
     { path: "category", label: "Category" },
+    { path: "revisions", label: "Revisions" },
     {
       key: "edit",
       content: (mindmap) => (
