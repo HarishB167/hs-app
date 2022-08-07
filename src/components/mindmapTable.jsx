@@ -19,10 +19,22 @@ const MindmapTable = (props) => {
         <Link
           to={"/mindmaps/" + mindmap._id + "/edit"}
           type="button"
-          className="btn btn-sm btn-warning"
+          className="btn btn-warning btn-sm"
         >
           Edit
         </Link>
+      ),
+    },
+    {
+      key: "delete",
+      content: (mindmap) => (
+        <button
+          onClick={() => props.onDelete(mindmap)}
+          type="button"
+          className="btn btn-danger btn-sm"
+        >
+          Delete
+        </button>
       ),
     },
   ];

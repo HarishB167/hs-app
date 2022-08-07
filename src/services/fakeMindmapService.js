@@ -160,3 +160,9 @@ export function saveMindmap(mindmap) {
 
   return mindmapInDb;
 }
+
+export function deleteMindmap(id) {
+  let mindmapInDb = mindmaps.find((m) => m._id === id);
+  mindmaps.splice(mindmaps.indexOf(mindmapInDb), 1);
+  return mindmapInDb;
+}
