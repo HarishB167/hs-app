@@ -7,11 +7,12 @@ Each branch consists of title and list of strings
 
 const mindmaps = [
   {
-    _id: 1,
+    _id: "1",
     title: "Django overview",
     category: "Django",
     branches: [
       {
+        _id: "1",
         title: "Part 1 Fundamentals",
         content: [
           "Fundamentals",
@@ -22,6 +23,7 @@ const mindmaps = [
         ],
       },
       {
+        _id: "2",
         title: "Part 2 Rest Framework",
         content: [
           "Building a rest api",
@@ -33,6 +35,7 @@ const mindmaps = [
         ],
       },
       {
+        _id: "3",
         title: "Part 3 Others",
         content: [
           "Uploading files",
@@ -46,6 +49,7 @@ const mindmaps = [
         ],
       },
       {
+        _id: "4",
         title: "Part 4 Some",
         content: [
           "Uploading files",
@@ -59,6 +63,7 @@ const mindmaps = [
         ],
       },
       {
+        _id: "5",
         title: "Part 5 A different feature",
         content: [
           "Uploading files",
@@ -72,6 +77,7 @@ const mindmaps = [
         ],
       },
       {
+        _id: "6",
         title: "Part 6 Sixth part",
         content: [
           "Uploading files",
@@ -87,31 +93,37 @@ const mindmaps = [
     ],
   },
   {
-    _id: 2,
+    _id: "2",
     title: "Fundamentals",
     category: "Django",
     branches: [
       {
+        _id: "1",
         title: "Introduction",
         content: [],
       },
       {
+        _id: "2",
         title: "Web development",
         content: [],
       },
       {
+        _id: "3",
         title: "Setting up development environment",
         content: [],
       },
       {
+        _id: "4",
         title: "First Django project",
         content: [],
       },
       {
+        _id: "5",
         title: "First Django app",
         content: [],
       },
       {
+        _id: "6",
         title: "Django debugging techniques",
         content: [],
       },
@@ -126,7 +138,24 @@ export function getMindmaps() {
 export function getMindmapWithId(id) {
   let result = false;
   mindmaps.forEach((map) => {
-    if (parseInt(id) === map._id) result = map;
+    if (id === map._id) result = map;
   });
   return result;
+}
+
+export function saveMindmap(mindmap) {
+  let mindmapInDb = mindmaps.find((m) => m._id === mindmap._id) || {};
+
+  mindmapInDb.title = mindmap.title;
+  mindmapInDb.category = mindmap.category;
+  mindmapInDb.branches = mindmap.branches;
+  console.log(mindmapInDb);
+
+  if (!mindmapInDb._id) {
+    mindmapInDb._id = Date.now().toString();
+    mindmaps.push(mindmapInDb);
+    console.log("Creating new");
+  }
+
+  return mindmapInDb;
 }

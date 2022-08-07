@@ -20,12 +20,17 @@ class Mindmap extends Component {
     }
     if (row.length !== 0) rows.push(row);
     console.log("array is ", rows);
+
     return (
       <div style={{ margin: "10px" }}>
-        <Link to={"/mindmaps/create"} type="button" className="btn btn-primary">
+        <Link to="/mindmaps/create" className="btn btn-primary">
           Create
         </Link>
-        <MindmapTable mindmaps={mindmaps} />
+        <MindmapTable
+          mindmaps={mindmaps}
+          sortColumn={"title"}
+          onSort={() => console.log("onSort clicked")}
+        />
       </div>
     );
   }

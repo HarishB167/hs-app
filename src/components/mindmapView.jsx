@@ -1,6 +1,6 @@
 import React from "react";
-import { getColor } from "../services/colors";
 import { getMindmapWithId } from "../services/fakeMindmapService";
+import Card from "./common/card";
 
 const MindmapView = (props) => {
   const mindmap = getMindmapWithId(props.match.params.id);
@@ -29,26 +29,7 @@ const MindmapView = (props) => {
       {rows.map((row) => (
         <div className="row justify-content-center">
           {row.map((branch) => (
-            <div
-              className="col-3"
-              style={{ marginBottom: "5px", marginTop: "5px" }}
-            >
-              <div
-                className="card"
-                style={{ minWidth: "10em", background: getColor(branch.title) }}
-              >
-                <div className="card-body">
-                  <h5 className="card-title">{branch.title}</h5>
-                  <p className="card-text" style={{ fontSize: "12px" }}>
-                    <ul>
-                      {branch.content.map((item) => (
-                        <li>{item}</li>
-                      ))}
-                    </ul>
-                  </p>
-                </div>
-              </div>
-            </div>
+            <Card title={branch.title} itemList={branch.content} />
           ))}
         </div>
       ))}
