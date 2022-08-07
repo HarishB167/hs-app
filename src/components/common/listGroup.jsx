@@ -1,6 +1,6 @@
 import React from "react";
 
-const ListGroup = ({ items, onEdit, onDelete }) => {
+const ListGroup = ({ items, onEdit, onDelete, onMoveUp, onMoveDown }) => {
   return (
     <ul className="list-group">
       {items.map((item, index) => (
@@ -12,12 +12,24 @@ const ListGroup = ({ items, onEdit, onDelete }) => {
           <div className="d-flex flex-wrap">
             <span className="mr-auto">{item}</span>
             {index !== 0 && (
-              <button className="btn btn-sm btn-outline-secondary">
+              <button
+                className="btn btn-sm btn-outline-secondary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onMoveUp(index);
+                }}
+              >
                 <i className="fa fa-angle-up" aria-hidden="true"></i>
               </button>
             )}
             {index !== items.length - 1 && (
-              <button className="btn btn-sm btn-outline-secondary">
+              <button
+                className="btn btn-sm btn-outline-secondary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onMoveDown(index);
+                }}
+              >
                 <i className="fa fa-angle-down" aria-hidden="true"></i>
               </button>
             )}

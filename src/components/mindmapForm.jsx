@@ -140,6 +140,26 @@ class MindmapForm extends Form {
     this.setState({ data });
   };
 
+  handleContentLineMoveUp = (index) => {
+    const { data } = { ...this.state };
+    if (index > 0) {
+      let temp = data.content[index];
+      data.content[index] = data.content[index - 1];
+      data.content[index - 1] = temp;
+    }
+    this.setState({ data });
+  };
+
+  handleContentLineMoveDown = (index) => {
+    const { data } = { ...this.state };
+    if (index < data.content.length) {
+      let temp = data.content[index];
+      data.content[index] = data.content[index + 1];
+      data.content[index + 1] = temp;
+    }
+    this.setState({ data });
+  };
+
   render() {
     const { branches } = this.state.data;
     return (
@@ -160,6 +180,8 @@ class MindmapForm extends Form {
                 contentList={this.state.data.content}
                 onContentLineEdit={this.handleContentLineEdit}
                 onContentLineDelete={this.handleContentLineDelete}
+                onMoveUp={this.handleContentLineMoveUp}
+                onMoveDown={this.handleContentLineMoveDown}
               />
 
               <div className="d-flex flex-wrap">

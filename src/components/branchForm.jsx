@@ -9,6 +9,8 @@ const BranchForm = ({
   contentList,
   onContentLineEdit,
   onContentLineDelete,
+  onMoveUp,
+  onMoveDown,
 }) => {
   return (
     <React.Fragment>
@@ -24,6 +26,8 @@ const BranchForm = ({
             items={contentList}
             onEdit={onContentLineEdit}
             onDelete={onContentLineDelete}
+            onMoveUp={onMoveUp}
+            onMoveDown={onMoveDown}
           />
         </div>
       </div>
