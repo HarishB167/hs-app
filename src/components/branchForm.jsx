@@ -8,6 +8,7 @@ const BranchForm = ({
   renderInput,
   contentList,
   onContentLineEdit,
+  onContentLineDelete,
 }) => {
   return (
     <React.Fragment>
@@ -19,10 +20,17 @@ const BranchForm = ({
           <AddButton onClick={onAddContentLine} />
         </div>
         <div className="col">
-          <ListGroup items={contentList} onClick={onContentLineEdit} />
+          <ListGroup
+            items={contentList}
+            onEdit={onContentLineEdit}
+            onDelete={onContentLineDelete}
+          />
         </div>
       </div>
-      <AddButton onClick={onAddBranch} />
+      {/* <AddButton onClick={onAddBranch} /> */}
+      <button className="btn btn-outline-secondary" onClick={onAddBranch}>
+        Save Branch
+      </button>
     </React.Fragment>
   );
 };

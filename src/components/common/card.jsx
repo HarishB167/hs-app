@@ -1,7 +1,7 @@
 import { getColor } from "../../services/colors";
 import React from "react";
 
-const Card = ({ title, itemList, id, onClick }) => {
+const Card = ({ title, itemList, id, onEdit, onDelete }) => {
   return (
     <div style={{ margin: "5px" }}>
       <div
@@ -15,15 +15,26 @@ const Card = ({ title, itemList, id, onClick }) => {
               <li key={item}>{item}</li>
             ))}
           </ul>
-          {onClick && (
+          {onEdit && (
             <button
               className="btn btn-outline-secondary"
               onClick={(e) => {
                 e.preventDefault();
-                onClick(id);
+                onEdit(id);
               }}
             >
               <i className="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+          )}
+          {onDelete && (
+            <button
+              className="btn btn-outline-secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                onDelete(id);
+              }}
+            >
+              <i className="fa fa-trash" aria-hidden="true"></i>
             </button>
           )}
         </div>

@@ -4,6 +4,7 @@ Title (string), Category (string),
 Branches (list)
 Each branch consists of title and list of strings
  */
+import _ from "lodash";
 
 const mindmaps = [
   {
@@ -132,7 +133,7 @@ const mindmaps = [
 ];
 
 export function getMindmaps() {
-  return mindmaps;
+  return _.cloneDeep(mindmaps);
 }
 
 export function getMindmapWithId(id) {

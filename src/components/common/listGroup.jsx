@@ -1,6 +1,6 @@
 import React from "react";
 
-const ListGroup = ({ items, onClick }) => {
+const ListGroup = ({ items, onEdit, onDelete }) => {
   return (
     <ul className="list-group">
       {items.map((item, index) => (
@@ -25,10 +25,19 @@ const ListGroup = ({ items, onClick }) => {
               className="btn btn-sm btn-outline-secondary"
               onClick={(e) => {
                 e.preventDefault();
-                onClick(index);
+                onEdit(index);
               }}
             >
               <i className="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                onDelete(index);
+              }}
+            >
+              <i className="fa fa-trash" aria-hidden="true"></i>
             </button>
           </div>
         </li>

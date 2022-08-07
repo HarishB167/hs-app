@@ -50,7 +50,7 @@ class MindmapForm extends Form {
       data._id = mindmap._id;
       data.title = mindmap.title;
       data.category = mindmap.category;
-      data.branches = mindmap.branches;
+      data.branches = [...mindmap.branches];
     }
     this.setState({
       pageType,
@@ -86,6 +86,7 @@ class MindmapForm extends Form {
       branch.content = [...content];
     }
 
+    data.branchId = "";
     data.branchTitle = "";
     data.contentInput = "";
     data.content = [];
@@ -107,7 +108,17 @@ class MindmapForm extends Form {
     const branch = data.branches.find((b) => b._id === id);
     data.branchId = id;
     data.branchTitle = branch.title;
-    data.content = branch.content;
+    data.content = [...branch.content];
+    this.setState({ data });
+  };
+
+  handleDeleteBranch = (id) => {
+    const { data } = { ...this.state };
+    const branch = data.branches.find((b) => b._id === id);
+    const index = data.branches.indexOf(branch);
+    if (index > -1) {
+      data.branches.splice(index, 1);
+    }
     this.setState({ data });
   };
 
@@ -115,6 +126,14 @@ class MindmapForm extends Form {
     console.log("Content line edit", index);
     const { data } = { ...this.state };
     data.contentInput = data.content[index];
+    if (index > -1) {
+      data.content.splice(index, 1);
+    }
+    this.setState({ data });
+  };
+
+  handleContentLineDelete = (index) => {
+    const { data } = { ...this.state };
     if (index > -1) {
       data.content.splice(index, 1);
     }
@@ -140,6 +159,7 @@ class MindmapForm extends Form {
                 renderInput={this.renderInput}
                 contentList={this.state.data.content}
                 onContentLineEdit={this.handleContentLineEdit}
+                onContentLineDelete={this.handleContentLineDelete}
               />
 
               <div className="d-flex flex-wrap">
@@ -149,7 +169,8 @@ class MindmapForm extends Form {
                       title={branch.title}
                       itemList={branch.content}
                       id={branch._id}
-                      onClick={this.handleEditBranch}
+                      onEdit={this.handleEditBranch}
+                      onDelete={this.handleDeleteBranch}
                     />
                   </div>
                 ))}
