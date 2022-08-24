@@ -8,13 +8,13 @@ import _ from "lodash";
 
 const mindmaps = [
   {
-    _id: "1",
+    id: "1",
     title: "Django overview",
     category: "Django",
     revisions: 0,
     branches: [
       {
-        _id: "1",
+        id: "1",
         title: "Part 1 Fundamentals",
         content: [
           "Fundamentals",
@@ -25,7 +25,7 @@ const mindmaps = [
         ],
       },
       {
-        _id: "2",
+        id: "2",
         title: "Part 2 Rest Framework",
         content: [
           "Building a rest api",
@@ -37,7 +37,7 @@ const mindmaps = [
         ],
       },
       {
-        _id: "3",
+        id: "3",
         title: "Part 3 Others",
         content: [
           "Uploading files",
@@ -51,7 +51,7 @@ const mindmaps = [
         ],
       },
       {
-        _id: "4",
+        id: "4",
         title: "Part 4 Some",
         content: [
           "Uploading files",
@@ -65,7 +65,7 @@ const mindmaps = [
         ],
       },
       {
-        _id: "5",
+        id: "5",
         title: "Part 5 A different feature",
         content: [
           "Uploading files",
@@ -79,7 +79,7 @@ const mindmaps = [
         ],
       },
       {
-        _id: "6",
+        id: "6",
         title: "Part 6 Sixth part",
         content: [
           "Uploading files",
@@ -95,38 +95,38 @@ const mindmaps = [
     ],
   },
   {
-    _id: "2",
+    id: "2",
     title: "Fundamentals",
     category: "Django",
     revisions: 0,
     branches: [
       {
-        _id: "1",
+        id: "1",
         title: "Introduction",
         content: [],
       },
       {
-        _id: "2",
+        id: "2",
         title: "Web development",
         content: [],
       },
       {
-        _id: "3",
+        id: "3",
         title: "Setting up development environment",
         content: [],
       },
       {
-        _id: "4",
+        id: "4",
         title: "First Django project",
         content: [],
       },
       {
-        _id: "5",
+        id: "5",
         title: "First Django app",
         content: [],
       },
       {
-        _id: "6",
+        id: "6",
         title: "Django debugging techniques",
         content: [],
       },
@@ -141,13 +141,13 @@ export function getMindmaps() {
 export function getMindmapWithId(id) {
   let result = false;
   mindmaps.forEach((map) => {
-    if (id === map._id) result = map;
+    if (id === map.id) result = map;
   });
   return result;
 }
 
 export function saveMindmap(mindmap) {
-  let mindmapInDb = mindmaps.find((m) => m._id === mindmap._id) || {};
+  let mindmapInDb = mindmaps.find((m) => m.id === mindmap.id) || {};
 
   mindmapInDb.title = mindmap.title;
   mindmapInDb.category = mindmap.category;
@@ -155,8 +155,8 @@ export function saveMindmap(mindmap) {
   mindmapInDb.revisions = mindmap.revisions;
   console.log(mindmapInDb);
 
-  if (!mindmapInDb._id) {
-    mindmapInDb._id = Date.now().toString();
+  if (!mindmapInDb.id) {
+    mindmapInDb.id = Date.now().toString();
     mindmaps.push(mindmapInDb);
     console.log("Creating new");
   }
@@ -165,13 +165,13 @@ export function saveMindmap(mindmap) {
 }
 
 export function deleteMindmap(id) {
-  let mindmapInDb = mindmaps.find((m) => m._id === id);
+  let mindmapInDb = mindmaps.find((m) => m.id === id);
   mindmaps.splice(mindmaps.indexOf(mindmapInDb), 1);
   return mindmapInDb;
 }
 
 export function incrementRevisions(id) {
-  let mindmapInDb = mindmaps.find((m) => m._id === id) || {};
+  let mindmapInDb = mindmaps.find((m) => m.id === id) || {};
   mindmapInDb.revisions = parseInt(mindmapInDb.revisions) + 1;
   return mindmapInDb;
 }

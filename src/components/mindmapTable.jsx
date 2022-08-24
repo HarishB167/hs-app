@@ -9,7 +9,7 @@ const MindmapTable = (props) => {
       path: "title",
       label: "Title",
       content: (mindmap) => (
-        <Link to={"/mindmaps/" + mindmap._id}>{mindmap.title}</Link>
+        <Link to={"/mindmaps/" + mindmap.id}>{mindmap.title}</Link>
       ),
     },
     { path: "category", label: "Category" },
@@ -18,7 +18,7 @@ const MindmapTable = (props) => {
       key: "edit",
       content: (mindmap) => (
         <Link
-          to={"/mindmaps/" + mindmap._id + "/edit"}
+          to={"/mindmaps/" + mindmap.id + "/edit"}
           type="button"
           className="btn btn-warning btn-sm"
         >

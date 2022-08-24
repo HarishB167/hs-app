@@ -29,7 +29,7 @@ const MindmapView = (props) => {
         <Badge
           label="Revisions"
           value={mindmap.revisions}
-          onClick={() => setMindmap({ ...incrementRevisions(mindmap._id) })}
+          onClick={() => setMindmap({ ...incrementRevisions(mindmap.id) })}
         />
       </div>
       <div className="row justify-content-center">

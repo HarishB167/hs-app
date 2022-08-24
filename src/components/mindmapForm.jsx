@@ -22,13 +22,13 @@ class MindmapForm extends Form {
   };
 
   schema = {
-    _id: Joi.optional(),
+    id: Joi.optional(),
     title: Joi.string().required().label("Title"),
     category: Joi.string().required().label("Category"),
     revisions: Joi.number().min(0).label("Revisions"),
     branches: Joi.array().items(
       Joi.object({
-        _id: Joi.optional(),
+        id: Joi.optional(),
         title: Joi.string().required(),
         content: Joi.array().items(Joi.string()),
       })
@@ -48,7 +48,7 @@ class MindmapForm extends Form {
       pageType = "Edit";
       const mindmap = getMindmapWithId(this.props.match.params.id);
       console.log("Edit", mindmap);
-      data._id = mindmap._id;
+      data.id = mindmap.id;
       data.title = mindmap.title;
       data.category = mindmap.category;
       data.branches = [...mindmap.branches];
@@ -63,7 +63,7 @@ class MindmapForm extends Form {
   doSubmit = () => {
     console.log("Submitted");
     const mindmap = {
-      _id: this.state.data._id,
+      id: this.state.data.id,
       title: this.state.data.title,
       category: this.state.data.category,
       branches: this.state.data.branches,
@@ -79,12 +79,12 @@ class MindmapForm extends Form {
     const { data } = { ...this.state };
     if (branchId === "")
       data.branches.push({
-        _id: Date.now().toString(),
+        id: Date.now().toString(),
         title: branchTitle,
         content: [...content],
       });
     else {
-      const branch = data.branches.find((b) => b._id === branchId);
+      const branch = data.branches.find((b) => b.id === branchId);
       branch.title = branchTitle;
       branch.content = [...content];
     }
@@ -108,7 +108,7 @@ class MindmapForm extends Form {
 
   handleEditBranch = (id) => {
     const { data } = { ...this.state };
-    const branch = data.branches.find((b) => b._id === id);
+    const branch = data.branches.find((b) => b.id === id);
     data.branchId = id;
     data.branchTitle = branch.title;
     data.content = [...branch.content];
@@ -117,7 +117,7 @@ class MindmapForm extends Form {
 
   handleDeleteBranch = (id) => {
     const { data } = { ...this.state };
-    const branch = data.branches.find((b) => b._id === id);
+    const branch = data.branches.find((b) => b.id === id);
     const index = data.branches.indexOf(branch);
     if (index > -1) {
       data.branches.splice(index, 1);
@@ -194,7 +194,7 @@ class MindmapForm extends Form {
                     <Card
                       title={branch.title}
                       itemList={branch.content}
-                      id={branch._id}
+                      id={branch.id}
                       onEdit={this.handleEditBranch}
                       onDelete={this.handleDeleteBranch}
                     />

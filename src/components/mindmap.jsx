@@ -14,7 +14,7 @@ class Mindmap extends Component {
   }
 
   handleDeleteMindmap = (mindmap) => {
-    deleteMindmap(mindmap._id);
+    deleteMindmap(mindmap.id);
     this.setState({ mindmaps: getMindmaps() });
   };
 
