@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from "react";
-import {
-  getMindmapWithId,
-  incrementRevisions,
-} from "../services/fakeMindmapService";
-import mindmapService from "../services/mindmapService";
+import mindmapService, { saveMindmap } from "../services/mindmapService";
 import Badge from "./common/badge";
 import Card from "./common/card";
+
+async function getMindmap(id, setMindmap, setPageRows) {
+  const mindmap = await mindmapService.getMindmap(id);
+  console.log(mindmap);
+  setMindmap(mindmap);
+
+  let rows = [];
+  let row = [];
+  for (let i = 0; i < mindmap.branches.length; i++) {
+    row.push(mindmap.branches[i]);
+    if (row.length >= 4) {
+      rows.push(row);
+      row = [];
+    }
+  }
+  if (row.length !== 0) rows.push(row);
+  console.log("array is ", rows);
+  setPageRows(rows);
+}
 
 const MindmapView = (props) => {
   const [mindmap, setMindmap] = useState();
   const [pageRows, setPageRows] = useState([]);
 
   useEffect(() => {
-    async function getMindmap() {
-      const mindmap = await mindmapService.getMindmap(props.match.params.id);
-      console.log(mindmap);
-      setMindmap(mindmap);
-
-      let rows = [];
-      let row = [];
-      for (let i = 0; i < mindmap.branches.length; i++) {
-        row.push(mindmap.branches[i]);
-        if (row.length >= 4) {
-          rows.push(row);
-          row = [];
-        }
-      }
-      if (row.length !== 0) rows.push(row);
-      console.log("array is ", rows);
-      setPageRows(rows);
-    }
-    getMindmap();
+    getMindmap(props.match.params.id, setMindmap, setPageRows);
   }, []);
 
   return (
@@ -40,7 +37,11 @@ const MindmapView = (props) => {
           <Badge
             label="Revisions"
             value={mindmap.revisions}
-            onClick={() => setMindmap({ ...incrementRevisions(mindmap.id) })}
+            onClick={() => {
+              mindmap.revisions += 1;
+              saveMindmap(mindmap);
+              getMindmap(props.match.params.id, setMindmap, setPageRows);
+            }}
           />
         )}
       </div>

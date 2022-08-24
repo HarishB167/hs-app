@@ -17,8 +17,8 @@ const BranchForm = ({
       <label>Branches</label>
       <div className="row">
         <div className="col-6">
-          {renderInput("branchTitle", "Title")}
-          {renderInput("contentInput", "Content")}
+          {renderInput("branchTitleInput", "Title")}
+          {renderInput("contentLineInput", "Content")}
           <AddButton onClick={onAddContentLine} />
         </div>
         <div className="col">

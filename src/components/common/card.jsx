@@ -11,8 +11,8 @@ const Card = ({ title, itemList, id, onEdit, onDelete }) => {
         <div className="card-body">
           <h5 className="card-title">{title}</h5>
           <ul className="card-text" style={{ fontSize: "12px" }}>
-            {itemList.map((item) => (
-              <li key={item.id}>{item.content}</li>
+            {itemList.map((item, idx) => (
+              <li key={idx}>{item.content}</li>
             ))}
           </ul>
           {onEdit && (

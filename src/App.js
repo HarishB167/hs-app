@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from "./components/home";
 import NavBar from "./components/navBar";
 import Mindmap from "./components/mindmap";

@@ -1,19 +1,20 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { getMindmapWithId } from "../services/fakeMindmapService";
 import Card from "./common/card";
 import BranchForm from "./branchForm";
-import { saveMindmap } from "../services/fakeMindmapService";
+import { getMindmap, saveMindmap } from "../services/mindmapService";
 
 class MindmapForm extends Form {
   state = {
     data: {
       title: "",
       category: "",
+      revisions: "",
       branches: [],
-      branchTitle: "",
-      contentInput: "",
+      branchTitleInput: "",
+      contentLineInput: "",
+      contentLineId: "",
       branchId: "",
       content: [],
     },
@@ -28,25 +29,35 @@ class MindmapForm extends Form {
     revisions: Joi.number().min(0).label("Revisions"),
     branches: Joi.array().items(
       Joi.object({
+        sort_number: Joi.optional(),
         id: Joi.optional(),
         title: Joi.string().required(),
-        content: Joi.array().items(Joi.string()),
+        mindmap: Joi.optional(),
+        content: Joi.array().items(
+          Joi.object({
+            sort_number: Joi.optional(),
+            id: Joi.optional(),
+            content: Joi.string(),
+            branch: Joi.optional(),
+          })
+        ),
       })
     ),
-    branchTitle: Joi.optional(),
-    contentInput: Joi.optional(),
+    branchTitleInput: Joi.optional(),
+    contentLineInput: Joi.optional(),
+    contentLineId: Joi.optional(),
     branchId: Joi.optional(),
     content: Joi.optional(),
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { data } = this.state;
     let pageType = "";
     if (this.props.location.pathname === "/mindmaps/create")
       pageType = "Create";
     else {
       pageType = "Edit";
-      const mindmap = getMindmapWithId(this.props.match.params.id);
+      const mindmap = await getMindmap(this.props.match.params.id);
       console.log("Edit", mindmap);
       data.id = mindmap.id;
       data.title = mindmap.title;
@@ -58,6 +69,11 @@ class MindmapForm extends Form {
       pageType,
       data,
     });
+
+    const some = Joi.validate(this.state.data, this.schema, {
+      abortEarly: false,
+    });
+    console.log("Validation result ", some);
   }
 
   doSubmit = () => {
@@ -69,40 +85,45 @@ class MindmapForm extends Form {
       branches: this.state.data.branches,
       revisions: this.state.data.revisions,
     };
+    console.log("Mindmap : ", mindmap);
     saveMindmap(mindmap);
     this.props.history.replace("/mindmaps");
   };
 
   handleAddBranch = (e) => {
     e.preventDefault();
-    const { branchTitle, content, branchId } = this.state.data;
+    const { branchTitleInput, content, branchId } = this.state.data;
     const { data } = { ...this.state };
     if (branchId === "")
       data.branches.push({
-        id: Date.now().toString(),
-        title: branchTitle,
+        title: branchTitleInput,
         content: [...content],
       });
     else {
       const branch = data.branches.find((b) => b.id === branchId);
-      branch.title = branchTitle;
+      branch.title = branchTitleInput;
       branch.content = [...content];
     }
 
     data.branchId = "";
-    data.branchTitle = "";
-    data.contentInput = "";
+    data.branchTitleInput = "";
+    data.contentLineInput = "";
     data.content = [];
-    console.log("Adding branch", branchTitle, content);
+    console.log("Adding branch", branchTitleInput, content);
     this.setState({ data });
   };
 
   handleAddContentLine = (e) => {
     e.preventDefault();
-    console.log("Add content line", this.state.data.contentInput);
+    console.log("Add content line", this.state.data.contentLineInput);
     const { data } = { ...this.state };
-    data.content.push(data.contentInput);
-    data.contentInput = "";
+    if (data.contentLineId)
+      data.content.push({
+        content: data.contentLineInput,
+        id: data.contentLineId,
+      });
+    else data.content.push({ content: data.contentLineInput });
+    data.contentLineInput = "";
     this.setState({ data });
   };
 
@@ -110,7 +131,7 @@ class MindmapForm extends Form {
     const { data } = { ...this.state };
     const branch = data.branches.find((b) => b.id === id);
     data.branchId = id;
-    data.branchTitle = branch.title;
+    data.branchTitleInput = branch.title;
     data.content = [...branch.content];
     this.setState({ data });
   };
@@ -128,7 +149,8 @@ class MindmapForm extends Form {
   handleContentLineEdit = (index) => {
     console.log("Content line edit", index);
     const { data } = { ...this.state };
-    data.contentInput = data.content[index];
+    data.contentLineInput = data.content[index].content;
+    data.contentLineId = data.content[index].id;
     if (index > -1) {
       data.content.splice(index, 1);
     }
@@ -181,7 +203,9 @@ class MindmapForm extends Form {
                 onAddContentLine={this.handleAddContentLine}
                 onAddBranch={this.handleAddBranch}
                 renderInput={this.renderInput}
-                contentList={this.state.data.content}
+                contentList={this.state.data.content.map(
+                  (item) => item.content
+                )}
                 onContentLineEdit={this.handleContentLineEdit}
                 onContentLineDelete={this.handleContentLineDelete}
                 onMoveUp={this.handleContentLineMoveUp}
