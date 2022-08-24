@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Home from "./components/home";
 import NavBar from "./components/navBar";
 import Mindmap from "./components/mindmap";
@@ -10,6 +11,7 @@ import "./App.css";
 function App() {
   return (
     <React.Fragment>
+      <ToastContainer />
       <NavBar />
       <Switch>
         <Route path="/mindmaps/create" component={MindmapForm} />

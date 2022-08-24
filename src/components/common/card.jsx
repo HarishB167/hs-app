@@ -12,7 +12,7 @@ const Card = ({ title, itemList, id, onEdit, onDelete }) => {
           <h5 className="card-title">{title}</h5>
           <ul className="card-text" style={{ fontSize: "12px" }}>
             {itemList.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={item.id}>{item.content}</li>
             ))}
           </ul>
           {onEdit && (

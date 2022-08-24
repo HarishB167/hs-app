@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { deleteMindmap, getMindmaps } from "../services/fakeMindmapService";
+import mindmapService from "../services/mindmapService";
 import MindmapTable from "./mindmapTable";
 
 class Mindmap extends Component {
@@ -9,13 +11,23 @@ class Mindmap extends Component {
     sortColumn: { path: "title", order: "asc" },
   };
 
-  componentDidMount() {
-    this.setState({ mindmaps: getMindmaps() });
+  async componentDidMount() {
+    const mindmaps = await mindmapService.getMindmaps();
+    console.log(mindmaps);
+    this.setState({ mindmaps });
   }
 
-  handleDeleteMindmap = (mindmap) => {
-    deleteMindmap(mindmap.id);
-    this.setState({ mindmaps: getMindmaps() });
+  handleDeleteMindmap = async (mindmap) => {
+    const originalMindmaps = this.state.mindmaps;
+    const mindmaps = originalMindmaps.filter((m) => m.id !== mindmap.id);
+    this.setState({ mindmaps });
+    try {
+      await mindmapService.deleteMindmap(mindmap.id);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast.error("This mindmap has already been deleted.");
+      this.setState({ mindmaps: originalMindmaps });
+    }
   };
 
   render() {
