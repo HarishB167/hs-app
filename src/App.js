@@ -13,7 +13,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div class="main-container">
+    <div className="main-container">
       <ToastContainer />
       <NavBar />
       <Switch>

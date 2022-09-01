@@ -2,7 +2,7 @@ import React from "react";
 
 function AddBranchForm(props) {
   return (
-    <div class="container container_center">
+    <div className="container container_center">
       <div className="container container_min-width_300px">
         <form className="mindmap-form">
           <h1>Add Branch</h1>
