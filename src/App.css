@@ -1,9 +1,9 @@
-.container {
+.main-container {
   padding: 0;
   height: 100vh;
 }
 
-.mindmap-container {
+.container {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -11,11 +11,11 @@
   max-width: 100%;
 }
 
-.mindmap-container > * {
-  margin: 1rem;
+.container > * {
+  margin: 1rem 0;
 }
 
-.mindmap-container_center {
+.container_center {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -45,56 +45,14 @@
   margin: 0.2rem;
 }
 
-/* For create2 endpoint */
-/* h1 {
-  font-size: 3.2rem;
-  margin-top: 3rem;
+.bem-button {
+  margin: 0.2rem;
 }
 
-input[type="text"] {
-  max-width: 300px;
+.mindmap-form {
+  max-width: 400px;
 }
 
-textarea {
-  resize: none;
+.mindmap-form__input {
+  margin: 1rem 0;
 }
-
-.container {
-  display: flex;
-  flex-direction: column;
-  max-height: 100vh;
-}
-
-.subtitle {
-  margin-bottom: 0;
-}
-
-.branch-pad {
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  min-height: 5rem;
-}
-
-.branch-select {
-  border: 2px solid red;
-  padding: 0.5rem 2rem;
-  border-radius: 10px;
-  margin: 2rem;
-  white-space: nowrap;
-  align-self: center;
-}
-
-.branch-select:hover,
-.branch-select:focus {
-  box-shadow: 0 0 1rem gray;
-}
-
-.branch-selected {
-  background: red;
-  color: white;
-}
-
-.branch-content {
-  overflow-y: scroll;
-} */

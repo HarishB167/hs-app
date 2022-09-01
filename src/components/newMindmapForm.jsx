@@ -1,22 +1,30 @@
 import React from "react";
 
-function NewMindmapForm(props) {
+function MindmapForm(props) {
   return (
-    <div>
-      <form>
-        <div class="container">
-          <h1>New Mindmap</h1>
-          <input type="text" placeholder="Title" />
-          <input type="text" placeholder="Category" />
-
-          <div>
-            <button>Save and Add branch</button>
-            <button>Save</button>
-          </div>
+    <div className="container container_center">
+      <form className="mindmap-form">
+        <h1>New Mindmap</h1>
+        <input
+          class="form-control mindmap-form__input"
+          type="text"
+          placeholder="Title"
+          autoFocus
+        />
+        <input
+          class="form-control mindmap-form__input"
+          type="text"
+          placeholder="Category"
+        />
+        <div>
+          <button class="btn btn-primary bem-button">
+            Save and Add branch
+          </button>
+          <button class="btn btn-primary bem-button">Save</button>
         </div>
       </form>
     </div>
   );
 }
 
-export default NewMindmapForm;
+export default MindmapForm;

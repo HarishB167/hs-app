@@ -32,13 +32,13 @@ class Mindmap extends Component {
 
   render() {
     return (
-      <div className="mindmap-container">
+      <div className="container">
         <div>
           <Link to="/mindmaps/create" className="btn btn-primary">
             Create
           </Link>
         </div>
-        <div className="mindmap-container_center">
+        <div className="container_center">
           <MindmapTable
             mindmaps={this.state.mindmaps}
             className={"mindmap-table"}
