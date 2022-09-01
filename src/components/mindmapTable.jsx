@@ -1,10 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Table from "./common/table";
 
-const MindmapTable = (props) => {
-  const { mindmaps, onSort, sortColumn } = props;
-  const columns = [
+function getColumns(className, onDelete) {
+  return [
     {
       path: "title",
       label: "Title",
@@ -12,37 +11,61 @@ const MindmapTable = (props) => {
         <Link to={"/mindmaps/" + mindmap.id}>{mindmap.title}</Link>
       ),
     },
-    { path: "category", label: "Category" },
-    { path: "revisions", label: "Revisions" },
+    { path: "categoryAndRevisions", label: "Category / Revisions" },
     {
       key: "edit",
       content: (mindmap) => (
-        <Link
-          to={"/mindmaps/" + mindmap.id + "/edit"}
-          type="button"
-          className="btn btn-warning btn-sm"
-        >
-          Edit
-        </Link>
-      ),
-    },
-    {
-      key: "delete",
-      content: (mindmap) => (
-        <button
-          onClick={() => props.onDelete(mindmap)}
-          type="button"
-          className="btn btn-danger btn-sm"
-        >
-          Delete
-        </button>
+        <div className={`${className}__edit-delete`}>
+          <Link
+            to={"/mindmaps/" + mindmap.id + "/edit"}
+            type="button"
+            className={`btn btn-warning btn-sm ${className}__button`}
+          >
+            Edit
+          </Link>
+          <button
+            onClick={() => onDelete(mindmap)}
+            type="button"
+            className={`btn btn-danger btn-sm ${className}__button`}
+          >
+            Delete
+          </button>
+        </div>
       ),
     },
   ];
+}
+
+const MindmapTable = (props) => {
+  const { mindmaps, className, onSort, sortColumn, onDelete } = props;
+
+  console.log("Mindmap data :", mindmaps);
+
+  const data = mindmaps.map((mindmap) => {
+    mindmap.categoryAndRevisions = (
+      <div className={`${className}__brief-info_font-size_s`}>
+        <div>
+          <span className={`${className}__brief-info_font-weight_b`}>
+            Category :{" "}
+          </span>
+          <span>{mindmap.category}</span>
+        </div>
+        <div>
+          <span className={`${className}__brief-info_font-weight_b`}>
+            Revisions :{" "}
+          </span>
+          <span>{mindmap.revisions}</span>
+        </div>
+      </div>
+    );
+    return mindmap;
+  });
+  console.log("After adding custom column :", data);
 
   return (
     <Table
-      columns={columns}
+      columns={getColumns(className, onDelete)}
+      className={`${className}__table`}
       data={mindmaps}
       sortColumn={sortColumn}
       onSort={onSort}

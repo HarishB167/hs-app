@@ -32,16 +32,21 @@ class Mindmap extends Component {
 
   render() {
     return (
-      <div style={{ margin: "10px" }}>
-        <Link to="/mindmaps/create" className="btn btn-primary">
-          Create
-        </Link>
-        <MindmapTable
-          mindmaps={this.state.mindmaps}
-          sortColumn={this.state.sortColumn}
-          onSort={() => console.log("onSort clicked")}
-          onDelete={this.handleDeleteMindmap}
-        />
+      <div className="mindmap-container">
+        <div>
+          <Link to="/mindmaps/create" className="btn btn-primary">
+            Create
+          </Link>
+        </div>
+        <div className="mindmap-container_center">
+          <MindmapTable
+            mindmaps={this.state.mindmaps}
+            className={"mindmap-table"}
+            sortColumn={this.state.sortColumn}
+            onSort={() => console.log("onSort clicked")}
+            onDelete={this.handleDeleteMindmap}
+          />
+        </div>
       </div>
     );
   }
