@@ -3,6 +3,8 @@
   height: 100vh;
 }
 
+/* container block class */
+
 .container {
   display: flex;
   flex-direction: column;
@@ -12,16 +14,29 @@
 }
 
 .container > * {
-  margin: 1rem 0;
+  margin: 0.1rem 0;
 }
 
 .container_center {
   align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+}
+
+.container_overflow_scroll {
   overflow-y: scroll;
 }
+.container_min-width_300px {
+  width: 300px;
+  min-width: 300px;
+  height: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  .container_min-width_300px {
+    min-width: 500px;
+  }
+}
+
+/* mindmap-table block class */
 
 .mindmap-table__table {
   max-height: 100%;
@@ -49,10 +64,16 @@
   margin: 0.2rem;
 }
 
+.bem-input {
+  margin: 1rem 0;
+}
+
 .mindmap-form {
   max-width: 400px;
 }
 
-.mindmap-form__input {
-  margin: 1rem 0;
+.branch-content {
+  height: 100%;
+  overflow-y: auto;
+  max-width: 400px;
 }

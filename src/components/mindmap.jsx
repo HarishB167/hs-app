@@ -38,7 +38,7 @@ class Mindmap extends Component {
             Create
           </Link>
         </div>
-        <div className="container_center">
+        <div className="container container_center container_overflow_scroll">
           <MindmapTable
             mindmaps={this.state.mindmaps}
             className={"mindmap-table"}

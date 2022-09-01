@@ -11,7 +11,7 @@ function getColumns(className, onDelete) {
         <Link to={"/mindmaps/" + mindmap.id}>{mindmap.title}</Link>
       ),
     },
-    { path: "categoryAndRevisions", label: "Category / Revisions" },
+    { path: "categoryAndRevisions", label: "Category/ Revisions" },
     {
       key: "edit",
       content: (mindmap) => (
