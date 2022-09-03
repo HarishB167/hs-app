@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark navbar_bg_gradient">
+    <nav className="navbar navbar-expand-lg navbar-dark fixed-top navbar_bg_gradient">
       <Link className="navbar-brand" to="/">
         HS
       </Link>

@@ -2,14 +2,18 @@ h1 {
   font-size: 1.953rem;
 }
 
-.main-container {
-  padding: 0;
-  height: 100vh;
+body {
+  padding-top: 4.5rem;
   background-image: linear-gradient(
     174.2deg,
     rgba(255, 244, 228, 1) 7.1%,
     rgba(240, 246, 238, 1) 67.4%
   );
+}
+
+.main-container {
+  padding: 0;
+  height: 100vh;
 }
 
 .navbar_bg_gradient {
