@@ -44,6 +44,12 @@ export async function editBranch(mindmapId, branch) {
   return result.data;
 }
 
+export async function deleteBranch(mindmapId, branch) {
+  const result = await http.delete(
+    `/mindmaps/${mindmapId}/branches/${branch.sort_number}/`
+  );
+}
+
 export async function createBranchContent(
   mindmapId,
   branchSortNumber,
@@ -66,6 +72,16 @@ export async function editBranchContent(
     branchContentLine
   );
   return result.data;
+}
+
+export async function deleteBranchContent(
+  mindmapId,
+  branchSortNumber,
+  branchContentLine
+) {
+  const result = await http.delete(
+    `/mindmaps/${mindmapId}/branches/${branchSortNumber}/branchline/${branchContentLine.sort_number}/`
+  );
 }
 
 export default {

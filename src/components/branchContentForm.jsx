@@ -4,6 +4,7 @@ import {
   getMindmap,
   createBranchContent,
   editBranchContent,
+  deleteBranchContent,
 } from "../services/mindmapService";
 import Modal from "./common/modal";
 
@@ -30,6 +31,8 @@ function BranchContentForm(props) {
     branch: "",
     sort_number: "",
   });
+
+  const [contentLineToDelete, setContentLineToDelete] = useState();
 
   async function loadMindmap() {
     if (mindmapId) {
@@ -84,10 +87,18 @@ function BranchContentForm(props) {
 
   const showDeleteLineModal = (line) => {
     $("#modalPopup").modal("toggle");
+    setContentLineToDelete(line);
   };
 
-  const handleContentLineDelete = () => {
+  const handleContentLineDelete = async () => {
     console.log("Deleting model - line :>> ");
+    await deleteBranchContent(
+      mindmapId,
+      selectedBranch.sort_number,
+      contentLineToDelete
+    );
+    loadMindmap();
+    clearTextAreaContent();
   };
 
   console.log("data.branches :>> ", data.branches);
@@ -158,8 +169,6 @@ function BranchContentForm(props) {
                 className="fa fa-trash-o m-2"
                 aria-hidden="true"
                 onClick={() => showDeleteLineModal(line)}
-                // data-toggle="modal"
-                // data-target="#modalPopup"
               ></i>
             </li>
           ))}

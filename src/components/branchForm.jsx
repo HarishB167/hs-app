@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import $ from "jquery/dist/jquery";
 import {
   getMindmap,
   createBranch,
   editBranch,
+  deleteBranch,
 } from "../services/mindmapService";
+import Modal from "./common/modal";
 
 function BranchForm(props) {
   const mindmapId = props.match.params.id;
@@ -20,6 +23,8 @@ function BranchForm(props) {
     mindmap: "",
     sort_number: "",
   });
+
+  const [branchToDelete, setBranchToDelete] = useState();
 
   async function loadMindmap() {
     if (mindmapId) {
@@ -60,9 +65,28 @@ function BranchForm(props) {
     setBranch({ title: "", mindmap: "", sort_number: "" });
   };
 
+  const showDeleteBranchModal = (branch) => {
+    $("#modalPopup").modal("toggle");
+    setBranchToDelete(branch);
+  };
+
+  const handleBranchDelete = async () => {
+    console.log("Deleting branch :>> ");
+    await deleteBranch(mindmapId, branchToDelete);
+    loadMindmap();
+    setBranch({ title: "", mindmap: "", sort_number: "" });
+  };
+
   return (
     <div className="container container_center">
       <div className="container container_min-width_300px">
+        <Modal
+          id="modalPopup"
+          title="Delete"
+          body="Are you sure you want to delete this item?"
+          action={handleBranchDelete}
+          actionMessage="Delete"
+        />
         <form className="mindmap-form">
           <h1>Branch</h1>
           <p>
@@ -87,6 +111,14 @@ function BranchForm(props) {
           >
             Save
           </button>
+          <button
+            onClick={() =>
+              props.history.push(`/mindmaps/${mindmapId}/branch-content`)
+            }
+            className="btn btn-primary bem-button"
+          >
+            Edit branch contents
+          </button>
         </form>
         <ul className="list-group branch-content">
           {data.branches.map((branch) => (
@@ -96,6 +128,11 @@ function BranchForm(props) {
                 className="fa fa-pencil m-2"
                 onClick={() => handleBranchEdit(branch)}
                 aria-hidden="true"
+              ></i>
+              <i
+                className="fa fa-trash-o m-2"
+                aria-hidden="true"
+                onClick={() => showDeleteBranchModal(branch)}
               ></i>
             </li>
           ))}
