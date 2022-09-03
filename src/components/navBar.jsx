@@ -3,10 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-dark"
-      style={{ backgroundColor: "#e63946" }}
-    >
+    <nav className="navbar navbar-expand-lg navbar-dark navbar_bg_gradient">
       <Link className="navbar-brand" to="/">
         HS
       </Link>
@@ -24,22 +21,42 @@ const NavBar = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/features">
+            <NavLink
+              className="nav-link"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              to="/features"
+            >
               Features
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/mindmaps">
+            <NavLink
+              className="nav-link"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              to="/mindmaps"
+            >
               Mindmap
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/about">
+            <NavLink
+              className="nav-link"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              to="/about"
+            >
               About
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/contact">
+            <NavLink
+              className="nav-link"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              to="/contact"
+            >
               Contact us
             </NavLink>
           </li>

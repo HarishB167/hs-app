@@ -125,13 +125,14 @@ function BranchForm(props) {
             <li key={branch.sort_number} className="list-group-item d-flex">
               <span className="flex-grow-1">{branch.title}</span>
               <i
-                className="fa fa-pencil m-2"
-                onClick={() => handleBranchEdit(branch)}
+                className="fa fa-pencil m-2 c-pointer"
                 aria-hidden="true"
+                onClick={() => handleBranchEdit(branch)}
               ></i>
               <i
-                className="fa fa-trash-o m-2"
+                className="fa fa-trash-o m-2 c-pointer"
                 aria-hidden="true"
+                role="button"
                 onClick={() => showDeleteBranchModal(branch)}
               ></i>
             </li>

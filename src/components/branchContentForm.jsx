@@ -125,7 +125,7 @@ function BranchContentForm(props) {
           {data.branches.map((branch, idx) => (
             <span
               className={
-                "pad__select" +
+                "pad__select c-pointer" +
                 (branch.sort_number === data.selected
                   ? " pad__select_selected"
                   : "")
@@ -161,12 +161,12 @@ function BranchContentForm(props) {
             <li className="list-group-item d-flex">
               <span className="flex-grow-1">{line.content}</span>
               <i
-                className="fa fa-pencil m-2"
+                className="fa fa-pencil m-2 c-pointer"
                 onClick={() => handleBranchContentEdit(line)}
                 aria-hidden="true"
               ></i>
               <i
-                className="fa fa-trash-o m-2"
+                className="fa fa-trash-o m-2 c-pointer"
                 aria-hidden="true"
                 onClick={() => showDeleteLineModal(line)}
               ></i>

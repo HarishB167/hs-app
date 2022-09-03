@@ -1,72 +1,55 @@
-import React, { useState, useEffect } from "react";
-import mindmapService, { saveMindmap } from "../services/mindmapService";
-import Badge from "./common/badge";
-import Card from "./common/card";
+import React from "react";
 
-async function getMindmap(id, setMindmap, setPageRows) {
-  const mindmap = await mindmapService.getMindmap(id);
-  console.log(mindmap);
-  setMindmap(mindmap);
-
-  let rows = [];
-  let row = [];
-  for (let i = 0; i < mindmap.branches.length; i++) {
-    row.push(mindmap.branches[i]);
-    if (row.length >= 4) {
-      rows.push(row);
-      row = [];
-    }
-  }
-  if (row.length !== 0) rows.push(row);
-  console.log("array is ", rows);
-  setPageRows(rows);
-}
-
-const MindmapView = (props) => {
-  const [mindmap, setMindmap] = useState();
-  const [pageRows, setPageRows] = useState([]);
-
-  useEffect(() => {
-    getMindmap(props.match.params.id, setMindmap, setPageRows);
-  }, []);
-
+function MindmapView(props) {
   return (
-    <div className="container">
-      <div className="row">
-        {mindmap && (
-          <Badge
-            label="Revisions"
-            value={mindmap.revisions}
-            onClick={() => {
-              mindmap.revisions += 1;
-              saveMindmap(mindmap);
-              getMindmap(props.match.params.id, setMindmap, setPageRows);
-            }}
-          />
-        )}
-      </div>
-      <div className="row justify-content-center">
-        {mindmap && (
-          <div className="col-4">
-            <div className="tile orange">
-              <h3 className="title">{mindmap.title}</h3>
-            </div>
+    <div className="container container_center">
+      <div className="container container_min-width_300px container_padding_0">
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <h5 className="text-center">Mindmap Title</h5>
+            <h6 className="text-center">(Category Name)</h6>
           </div>
-        )}
-      </div>
-      {pageRows.map((row, idx) => (
-        <div key={idx} className="row justify-content-center">
-          {row.map((branch) => (
-            <Card
-              key={branch.id}
-              title={branch.title}
-              itemList={branch.content}
-            />
-          ))}
+          <button type="button" class="btn btn-primary">
+            Reviews <span class="badge badge-light">9</span>
+            <span class="sr-only">mindmap review count</span>
+          </button>
         </div>
-      ))}
+        <div className="pad">
+          <span className="pad__select">Branch 1</span>
+          <span className="pad__select pad__select_selected">Branch 2</span>
+          <span className="pad__select">Branch 3</span>
+        </div>
+        <ul className="list-group branch-content">
+          <li className="list-group-item">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+            illum?
+          </li>
+          <li className="list-group-item">Lorem ipsum dolor sit amet.</li>
+          <li className="list-group-item">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          </li>
+          <li className="list-group-item">Lorem ipsum dolor sit amet.</li>
+          <li className="list-group-item">
+            Lorem ipsum dolor sit amet consectetur.
+          </li>
+          <li className="list-group-item">Lorem, ipsum.</li>
+          <li className="list-group-item">Lorem.</li>
+          <li className="list-group-item">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi, ex
+            eveniet. Incidunt sequi perferendis voluptatum quibusdam! Eligendi,
+            ea? Maiores, ratione.
+          </li>
+          <li className="list-group-item">Lorem, ipsum.</li>
+          <li className="list-group-item">Lorem.</li>
+          <li className="list-group-item">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi, ex
+            eveniet. Incidunt sequi perferendis voluptatum quibusdam! Eligendi,
+            ea? Maiores, ratione.
+          </li>
+        </ul>
+      </div>
     </div>
   );
-};
+}
 
 export default MindmapView;
