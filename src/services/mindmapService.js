@@ -6,7 +6,7 @@ export async function getMindmaps() {
 }
 
 export async function getMindmap(id) {
-  const result = await http.get("/mindmaps/" + id);
+  const result = await http.get("/mindmaps/" + id + "/");
   return result.data;
 }
 
@@ -29,6 +29,19 @@ export async function incrementRevisions(id, revisions) {
   const result = await http.patch(`/mindmaps/${id}/`, {
     revisions: revisions,
   });
+}
+
+export async function createBranch(mindmapId, branch) {
+  const result = await http.post(`/mindmaps/${mindmapId}/branches/`, branch);
+  return result.data;
+}
+
+export async function editBranch(mindmapId, branch) {
+  const result = await http.put(
+    `/mindmaps/${mindmapId}/branches/${branch.sort_number}/`,
+    branch
+  );
+  return result.data;
 }
 
 export default {

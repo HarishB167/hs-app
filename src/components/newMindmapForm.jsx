@@ -72,12 +72,36 @@ function MindmapForm(props) {
           required
         />
         <div>
-          <button className="btn btn-primary bem-button">
-            Save and Add branch
-          </button>
-          <button onClick={save} className="btn btn-primary bem-button">
-            Save
-          </button>
+          {pageType === "Create" && (
+            <React.Fragment>
+              <button className="btn btn-primary bem-button">
+                Save and Add branch
+              </button>
+              <button onClick={save} className="btn btn-primary bem-button">
+                Save
+              </button>
+            </React.Fragment>
+          )}
+          {pageType === "Edit" && (
+            <React.Fragment>
+              <button
+                onClick={() =>
+                  props.history.replace(`/mindmaps/${data.id}/branch`)
+                }
+                className="btn btn-primary bem-button"
+              >
+                Edit branches
+              </button>
+              <button
+                onClick={() =>
+                  props.history.replace(`/mindmaps/${data.id}/branch-content`)
+                }
+                className="btn btn-primary bem-button"
+              >
+                Edit branch contents
+              </button>
+            </React.Fragment>
+          )}
         </div>
       </form>
     </div>

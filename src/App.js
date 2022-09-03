@@ -6,7 +6,7 @@ import NavBar from "./components/navBar";
 import Mindmap from "./components/mindmap";
 import MindmapView from "./components/mindmapView";
 import MindmapForm from "./components/newMindmapForm";
-import AddBranchForm from "./components/addBranchForm";
+import BranchForm from "./components/branchForm";
 import AddBranchContentForm from "./components/addBranchContentForm";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -18,12 +18,12 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/mindmaps/create" component={MindmapForm} />
-        <Route path="/mindmaps/add-branch" component={AddBranchForm} />
         <Route
-          path="/mindmaps/add-branch-content"
+          path="/mindmaps/:id/branch-content"
           component={AddBranchContentForm}
         />
         <Route path="/mindmaps/:id/edit" component={MindmapForm} />
+        <Route path="/mindmaps/:id/branch" component={BranchForm} />
         <Route path="/mindmaps/:id" component={MindmapView} />
         <Route path="/mindmaps" component={Mindmap} />
         <Route path="/" exact component={Home} />
