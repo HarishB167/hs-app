@@ -72,16 +72,9 @@ function MindmapForm(props) {
           required
         />
         <div>
-          {pageType === "Create" && (
-            <React.Fragment>
-              <button className="btn btn-primary bem-button">
-                Save and Add branch
-              </button>
-              <button onClick={save} className="btn btn-primary bem-button">
-                Save
-              </button>
-            </React.Fragment>
-          )}
+          <button onClick={save} className="btn btn-primary bem-button">
+            Save
+          </button>
           {pageType === "Edit" && (
             <React.Fragment>
               <button
