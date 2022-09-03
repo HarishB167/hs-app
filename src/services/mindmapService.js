@@ -44,6 +44,30 @@ export async function editBranch(mindmapId, branch) {
   return result.data;
 }
 
+export async function createBranchContent(
+  mindmapId,
+  branchSortNumber,
+  branchContentLine
+) {
+  const result = await http.post(
+    `/mindmaps/${mindmapId}/branches/${branchSortNumber}/branchline/`,
+    branchContentLine
+  );
+  return result.data;
+}
+
+export async function editBranchContent(
+  mindmapId,
+  branchSortNumber,
+  branchContentLine
+) {
+  const result = await http.put(
+    `/mindmaps/${mindmapId}/branches/${branchSortNumber}/branchline/${branchContentLine.sort_number}/`,
+    branchContentLine
+  );
+  return result.data;
+}
+
 export default {
   getMindmaps,
   getMindmap,

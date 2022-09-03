@@ -86,7 +86,7 @@ function MindmapForm(props) {
             <React.Fragment>
               <button
                 onClick={() =>
-                  props.history.replace(`/mindmaps/${data.id}/branch`)
+                  props.history.push(`/mindmaps/${data.id}/branch`)
                 }
                 className="btn btn-primary bem-button"
               >
@@ -94,7 +94,7 @@ function MindmapForm(props) {
               </button>
               <button
                 onClick={() =>
-                  props.history.replace(`/mindmaps/${data.id}/branch-content`)
+                  props.history.push(`/mindmaps/${data.id}/branch-content`)
                 }
                 className="btn btn-primary bem-button"
               >

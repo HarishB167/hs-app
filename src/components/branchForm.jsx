@@ -6,7 +6,7 @@ import {
 } from "../services/mindmapService";
 
 function BranchForm(props) {
-  const branchId = props.match.params.id;
+  const mindmapId = props.match.params.id;
 
   const [data, setData] = useState({
     title: "",
@@ -22,7 +22,7 @@ function BranchForm(props) {
   });
 
   async function loadMindmap() {
-    if (branchId) {
+    if (mindmapId) {
       const mindmap = await getMindmap(props.match.params.id);
       console.log("Edit branch", mindmap);
       const newData = { ...data };
@@ -50,11 +50,11 @@ function BranchForm(props) {
   const handleBranchSave = async (e) => {
     e.preventDefault();
     if (branch.sort_number) {
-      await editBranch(branchId, branch);
+      await editBranch(mindmapId, branch);
     } else {
-      branch.mindmap = branchId;
+      branch.mindmap = mindmapId;
       branch.sort_number = data.branches.length + 1;
-      await createBranch(branchId, branch);
+      await createBranch(mindmapId, branch);
     }
     loadMindmap();
     setBranch({ title: "", mindmap: "", sort_number: "" });
@@ -66,7 +66,10 @@ function BranchForm(props) {
         <form className="mindmap-form">
           <h1>Branch</h1>
           <p>
-            {data.title} <span>(Category : {data.category})</span>
+            {data.title}{" "}
+            <span>
+              (<strong>Category: </strong> {data.category})
+            </span>
           </p>
           <input
             className="form-control bem-input"
