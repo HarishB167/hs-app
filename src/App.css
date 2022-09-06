@@ -30,6 +30,40 @@ body {
   cursor: pointer;
 }
 
+/* For home page  */
+
+.home-page-thumbnail {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.app-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+@media screen and (min-width: 500px) {
+  .home-page-thumbnail {
+    width: 150px;
+    height: 150px;
+  }
+
+  .app-details {
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 650px;
+    width: 100%;
+  }
+
+  .description {
+    max-width: 50%;
+    max-height: 250px;
+  }
+}
+
 /* container block class */
 
 .container {
