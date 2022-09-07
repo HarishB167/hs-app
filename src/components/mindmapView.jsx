@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { getMindmap, saveMindmap } from "../services/mindmapService";
 import SpinnerWhileLoading from "./common/spinnerWhileLoading";
 
@@ -101,6 +102,12 @@ function MindmapView(props) {
               )}
             </button>
           </div>
+          <Link
+            className="btn btn-secondary btn-sm mx-3 w-50 align-self-center"
+            to={`/mindmaps/${mindmapId}/view-image`}
+          >
+            View image
+          </Link>
           <div className="pad">
             {data.branches.map((branch, idx) => (
               <span

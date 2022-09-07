@@ -10,6 +10,7 @@ function MindmapForm(props) {
     title: "",
     category: "",
     revisions: 0,
+    image_link: "",
     branches: [],
   });
 
@@ -26,6 +27,7 @@ function MindmapForm(props) {
         newData.category = mindmap.category;
         newData.branches = [...mindmap.branches];
         newData.revisions = mindmap.revisions;
+        newData.image_link = mindmap.image_link;
         setData(newData);
         setShowSpinner(false);
       }
@@ -47,6 +49,7 @@ function MindmapForm(props) {
       title: data.title,
       category: data.category,
       revisions: data.revisions,
+      image_link: data.image_link,
       branches: data.branches,
     };
     console.log("Mindmap : ", mindmap);
@@ -74,6 +77,14 @@ function MindmapForm(props) {
             placeholder="Category"
             value={data.category}
             onChange={(e) => handleChange(e, "category")}
+            required
+          />
+          <input
+            className="form-control bem-input"
+            type="text"
+            placeholder="Image Link"
+            value={data.image_link}
+            onChange={(e) => handleChange(e, "image_link")}
             required
           />
           <div>

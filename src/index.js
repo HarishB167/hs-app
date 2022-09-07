@@ -7,6 +7,8 @@ import "./css/normalize.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 import "bootstrap/dist/js/bootstrap";
+import "lightbox2/dist/css/lightbox.css";
+import "lightbox2/dist/js/lightbox-plus-jquery";
 import "./index.css";
 import App from "./App";
 

@@ -11,6 +11,7 @@
     "font-awesome": "^4.7.0",
     "joi-browser": "13.4",
     "jquery": "^3.6.1",
+    "lightbox2": "^2.11.3",
     "lodash": "^4.17.10",
     "milligram": "^1.4.1",
     "raven-js": "^3.26.4",

@@ -8,6 +8,7 @@ import MindmapView from "./components/mindmapView";
 import MindmapForm from "./components/newMindmapForm";
 import BranchForm from "./components/branchForm";
 import BranchContentForm from "./components/branchContentForm";
+import MindmapImageView from "./components/mindmapImageView";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
@@ -31,6 +32,7 @@ function App() {
         />
         <Route path="/mindmaps/:id/edit" component={MindmapForm} />
         <Route path="/mindmaps/:id/branch" component={BranchForm} />
+        <Route path="/mindmaps/:id/view-image" component={MindmapImageView} />
         <Route path="/mindmaps/:id" component={MindmapView} />
         <Route
           path="/mindmaps"
