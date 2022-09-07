@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMindmap, saveMindmap } from "../services/mindmapService";
+import SpinnerWhileLoading from "./common/spinnerWhileLoading";
 
 function MindmapForm(props) {
   const pageType =
@@ -11,6 +12,8 @@ function MindmapForm(props) {
     revisions: 0,
     branches: [],
   });
+
+  const [showSpinner, setShowSpinner] = useState(pageType === "Edit");
 
   useEffect(() => {
     async function loadMindmap() {
@@ -24,6 +27,7 @@ function MindmapForm(props) {
         newData.branches = [...mindmap.branches];
         newData.revisions = mindmap.revisions;
         setData(newData);
+        setShowSpinner(false);
       }
     }
     loadMindmap();
@@ -52,51 +56,53 @@ function MindmapForm(props) {
 
   return (
     <div className="container container_center">
-      <form className="mindmap-form">
-        <h1>{pageType} Mindmap</h1>
-        <input
-          className="form-control bem-input"
-          type="text"
-          placeholder="Title"
-          value={data.title}
-          onChange={(e) => handleChange(e, "title")}
-          autoFocus
-          required
-        />
-        <input
-          className="form-control bem-input"
-          type="text"
-          placeholder="Category"
-          value={data.category}
-          onChange={(e) => handleChange(e, "category")}
-          required
-        />
-        <div>
-          <button onClick={save} className="btn btn-primary bem-button">
-            Save
-          </button>
-          {pageType === "Edit" && (
-            <React.Fragment>
-              <button
-                onClick={() =>
-                  props.history.push(`/mindmaps/${data.id}/branch`)
-                }
-                className="btn btn-primary bem-button"
-              >
-                Edit branches
-              </button>
-              <button
-                onClick={() =>
-                  props.history.push(`/mindmaps/${data.id}/branch-content`)
-                }
-                className="btn btn-primary bem-button"
-              >
-                Edit branch contents
-              </button>
-            </React.Fragment>
-          )}
-        </div>
-      </form>
+      <SpinnerWhileLoading showSpinnerWhen={showSpinner}>
+        <form className="mindmap-form">
+          <h1>{pageType} Mindmap</h1>
+          <input
+            className="form-control bem-input"
+            type="text"
+            placeholder="Title"
+            value={data.title}
+            onChange={(e) => handleChange(e, "title")}
+            autoFocus
+            required
+          />
+          <input
+            className="form-control bem-input"
+            type="text"
+            placeholder="Category"
+            value={data.category}
+            onChange={(e) => handleChange(e, "category")}
+            required
+          />
+          <div>
+            <button onClick={save} className="btn btn-primary bem-button">
+              Save
+            </button>
+            {pageType === "Edit" && (
+              <React.Fragment>
+                <button
+                  onClick={() =>
+                    props.history.push(`/mindmaps/${data.id}/branch`)
+                  }
+                  className="btn btn-primary bem-button"
+                >
+                  Edit branches
+                </button>
+                <button
+                  onClick={() =>
+                    props.history.push(`/mindmaps/${data.id}/branch-content`)
+                  }
+                  className="btn btn-primary bem-button"
+                >
+                  Edit branch contents
+                </button>
+              </React.Fragment>
+            )}
+          </div>
+        </form>
+      </SpinnerWhileLoading>
     </div>
   );
 }

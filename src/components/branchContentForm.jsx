@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import $ from "jquery/dist/jquery";
 import {
   getMindmap,
@@ -7,6 +8,7 @@ import {
   deleteBranchContent,
 } from "../services/mindmapService";
 import Modal from "./common/modal";
+import SpinnerWhileLoading from "./common/spinnerWhileLoading";
 
 function BranchContentForm(props) {
   const mindmapId = props.match.params.id;
@@ -33,6 +35,7 @@ function BranchContentForm(props) {
   });
 
   const [contentLineToDelete, setContentLineToDelete] = useState();
+  const [showSpinner, setShowSpinner] = useState(true);
 
   async function loadMindmap() {
     if (mindmapId) {
@@ -45,6 +48,7 @@ function BranchContentForm(props) {
       newData.branches = [...mindmap.branches];
       newData.revisions = mindmap.revisions;
       setData(newData);
+      setShowSpinner(false);
     }
   }
 
@@ -76,10 +80,12 @@ function BranchContentForm(props) {
     console.log("Saving content line");
     if (content.sort_number) {
       await editBranchContent(mindmapId, selectedBranch.sort_number, content);
+      toast.success("Branch content line edited successfully.");
     } else {
       content.branch = selectedBranch.id;
       content.sort_number = selectedBranch.content.length + 1;
       await createBranchContent(mindmapId, selectedBranch.sort_number, content);
+      toast.success("Branch content line created successfully.");
     }
     loadMindmap();
     clearTextAreaContent();
@@ -106,74 +112,76 @@ function BranchContentForm(props) {
 
   return (
     <div className="container container_center">
-      <div className="container container_min-width_300px container_padding_0">
-        <Modal
-          id="modalPopup"
-          title="Delete"
-          body="Are you sure you want to delete this item?"
-          action={handleContentLineDelete}
-          actionMessage="Delete"
-        />
-        <h1>Add Branch Content</h1>
-        <p className="subtitle">
-          {data.title}{" "}
-          <span>
-            (<strong>Category: </strong> {data.category})
-          </span>
-        </p>
-        <div className="pad">
-          {data.branches.map((branch, idx) => (
-            <span
-              className={
-                "pad__select c-pointer" +
-                (branch.sort_number === data.selected
-                  ? " pad__select_selected"
-                  : "")
-              }
-              onClick={() => {
-                setData({ ...data, selected: branch.sort_number });
-                clearTextAreaContent();
-              }}
-            >
-              {branch.title}
+      <SpinnerWhileLoading showSpinnerWhen={showSpinner}>
+        <div className="container container_min-width_300px container_padding_0">
+          <Modal
+            id="modalPopup"
+            title="Delete"
+            body="Are you sure you want to delete this item?"
+            action={handleContentLineDelete}
+            actionMessage="Delete"
+          />
+          <h1>Add Branch Content</h1>
+          <p className="subtitle">
+            {data.title}{" "}
+            <span>
+              (<strong>Category: </strong> {data.category})
             </span>
-          ))}
+          </p>
+          <div className="pad">
+            {data.branches.map((branch, idx) => (
+              <span
+                className={
+                  "pad__select c-pointer" +
+                  (branch.sort_number === data.selected
+                    ? " pad__select_selected"
+                    : "")
+                }
+                onClick={() => {
+                  setData({ ...data, selected: branch.sort_number });
+                  clearTextAreaContent();
+                }}
+              >
+                {branch.title}
+              </span>
+            ))}
+          </div>
+          <form>
+            <textarea
+              className="form-control bem-input"
+              placeholder="Branch content line"
+              rows="3"
+              value={content.content}
+              onChange={(e) =>
+                setContent({ ...content, content: e.currentTarget.value })
+              }
+            ></textarea>
+            <button
+              onClick={(e) => handleContentSave(e)}
+              className="btn btn-primary bem-button"
+            >
+              Save
+            </button>
+          </form>
+          <ul className="list-group branch-content">
+            {selectedBranch.content.map((line) => (
+              <li className="list-group-item d-flex">
+                <span className="flex-grow-1">{line.content}</span>
+                <i
+                  className="fa fa-pencil m-2 c-pointer"
+                  onClick={() => handleBranchContentEdit(line)}
+                  aria-hidden="true"
+                ></i>
+                <i
+                  className="fa fa-trash-o m-2 c-pointer"
+                  aria-hidden="true"
+                  onClick={() => showDeleteLineModal(line)}
+                ></i>
+              </li>
+            ))}
+          </ul>
         </div>
-        <form>
-          <textarea
-            className="form-control bem-input"
-            placeholder="Branch content line"
-            rows="3"
-            value={content.content}
-            onChange={(e) =>
-              setContent({ ...content, content: e.currentTarget.value })
-            }
-          ></textarea>
-          <button
-            onClick={(e) => handleContentSave(e)}
-            className="btn btn-primary bem-button"
-          >
-            Save
-          </button>
-        </form>
-        <ul className="list-group branch-content">
-          {selectedBranch.content.map((line) => (
-            <li className="list-group-item d-flex">
-              <span className="flex-grow-1">{line.content}</span>
-              <i
-                className="fa fa-pencil m-2 c-pointer"
-                onClick={() => handleBranchContentEdit(line)}
-                aria-hidden="true"
-              ></i>
-              <i
-                className="fa fa-trash-o m-2 c-pointer"
-                aria-hidden="true"
-                onClick={() => showDeleteLineModal(line)}
-              ></i>
-            </li>
-          ))}
-        </ul>
-      </div>
+      </SpinnerWhileLoading>
     </div>
   );
 }

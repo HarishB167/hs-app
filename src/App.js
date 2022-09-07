@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Home from "./components/home";
@@ -12,6 +12,13 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 function App() {
+  const [appState, setAppState] = useState({});
+
+  const setState = (key, value) => {
+    const state = { ...appState };
+    state[key] = value;
+    setAppState(state);
+  };
   return (
     <div className="main-container">
       <ToastContainer />
@@ -25,8 +32,19 @@ function App() {
         <Route path="/mindmaps/:id/edit" component={MindmapForm} />
         <Route path="/mindmaps/:id/branch" component={BranchForm} />
         <Route path="/mindmaps/:id" component={MindmapView} />
-        <Route path="/mindmaps" component={Mindmap} />
-        <Route path="/" exact component={Home} />
+        <Route
+          path="/mindmaps"
+          render={(props) => (
+            <Mindmap appState={appState} setState={setState} {...props} />
+          )}
+        />
+        <Route
+          path="/"
+          exact
+          render={(props) => (
+            <Home appState={appState} setState={setState} {...props} />
+          )}
+        />
       </Switch>
     </div>
   );
