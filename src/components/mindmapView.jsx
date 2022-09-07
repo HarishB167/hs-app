@@ -23,6 +23,7 @@ function MindmapView(props) {
   });
 
   const [showSpinner, setShowSpinner] = useState(true);
+  const [showRevisionSpinner, setShowRevisionSpinner] = useState(false);
 
   async function loadMindmap() {
     if (mindmapId) {
@@ -57,6 +58,7 @@ function MindmapView(props) {
 
   const incrementRevisions = async (e) => {
     e.preventDefault();
+    setShowRevisionSpinner(true);
     const mindmap = {
       id: data.id,
       title: data.title,
@@ -65,7 +67,8 @@ function MindmapView(props) {
       branches: data.branches,
     };
     await saveMindmap(mindmap);
-    loadMindmap();
+    await loadMindmap();
+    setShowRevisionSpinner(false);
   };
 
   return (
@@ -79,12 +82,23 @@ function MindmapView(props) {
             </div>
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-primary btn-sm"
               onClick={incrementRevisions}
             >
-              Revisions{" "}
-              <span className="badge badge-light">{data.revisions}</span>
-              <span className="sr-only">mindmap review count</span>
+              {showRevisionSpinner && (
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              {!showRevisionSpinner && (
+                <React.Fragment>
+                  Revisions{" "}
+                  <span className="badge badge-light">{data.revisions}</span>
+                  <span className="sr-only">mindmap review count</span>
+                </React.Fragment>
+              )}
             </button>
           </div>
           <div className="pad">
