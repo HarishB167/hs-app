@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getMindmap, saveMindmap } from "../services/mindmapService";
 import SpinnerWhileLoading from "./common/spinnerWhileLoading";
 
 function MindmapView(props) {
   const mindmapId = props.match.params.id;
+
+  const padSelectedRef = useRef(null);
 
   const [data, setData] = useState({
     title: "",
@@ -45,6 +47,12 @@ function MindmapView(props) {
       (branch) => branch.sort_number == data.selected
     );
     if (branch) setSelectedBranch(branch);
+    if (padSelectedRef.current)
+      padSelectedRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
   }, [data]);
 
   const incrementRevisions = async (e) => {
@@ -87,6 +95,9 @@ function MindmapView(props) {
                   (branch.sort_number === data.selected
                     ? " pad__select_selected"
                     : "")
+                }
+                ref={
+                  branch.sort_number === data.selected ? padSelectedRef : null
                 }
                 onClick={() => {
                   setData({ ...data, selected: branch.sort_number });

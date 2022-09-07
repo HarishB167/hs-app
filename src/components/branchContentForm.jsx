@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import $ from "jquery/dist/jquery";
 import {
@@ -12,6 +12,8 @@ import SpinnerWhileLoading from "./common/spinnerWhileLoading";
 
 function BranchContentForm(props) {
   const mindmapId = props.match.params.id;
+
+  const padSelectedRef = useRef(null);
 
   const [data, setData] = useState({
     title: "",
@@ -61,6 +63,12 @@ function BranchContentForm(props) {
       (branch) => branch.sort_number == data.selected
     );
     if (branch) setSelectedBranch(branch);
+    if (padSelectedRef.current)
+      padSelectedRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
   }, [data]);
 
   const clearTextAreaContent = () => {
@@ -136,6 +144,9 @@ function BranchContentForm(props) {
                   (branch.sort_number === data.selected
                     ? " pad__select_selected"
                     : "")
+                }
+                ref={
+                  branch.sort_number === data.selected ? padSelectedRef : null
                 }
                 onClick={() => {
                   setData({ ...data, selected: branch.sort_number });
