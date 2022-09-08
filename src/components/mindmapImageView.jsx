@@ -16,6 +16,7 @@ function MindmapImageView(props) {
   });
 
   const [showSpinner, setShowSpinner] = useState(true);
+  const [showImageLoadSpinner, setShowImaegLoadSpinner] = useState(true);
 
   async function loadMindmap() {
     if (mindmapId) {
@@ -36,14 +37,16 @@ function MindmapImageView(props) {
     if (viewer && data.image_link) {
       viewer.open({ type: "image", url: data.image_link });
     } else if (!viewer && data.image_link) {
-      setViewer(
-        OpenSeadragon({
-          id: "openseadragon1",
-          prefixUrl:
-            "https://cdn.jsdelivr.net/npm/openseadragon@3.1/build/openseadragon/images/",
-          tileSources: { type: "image", url: data.image_link },
-        })
-      );
+      const mViewer = OpenSeadragon({
+        id: "openseadragon1",
+        prefixUrl:
+          "https://cdn.jsdelivr.net/npm/openseadragon@3.1/build/openseadragon/images/",
+        tileSources: { type: "image", url: data.image_link },
+      });
+      mViewer.addHandler("tile-loaded", (obj) => {
+        setShowImaegLoadSpinner(false);
+      });
+      setViewer(mViewer);
     }
   }, [data]);
 
@@ -57,6 +60,10 @@ function MindmapImageView(props) {
         <div>
           Mindmap Image view : {data.title} ({data.category})
         </div>
+        <SpinnerWhileLoading
+          spinnerType="spinner-grow text-success"
+          showSpinnerWhen={showImageLoadSpinner}
+        />
         <div className="h-75 w-100">
           <div id="openseadragon1" className="w-100 h-100"></div>
         </div>

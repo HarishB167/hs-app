@@ -3,12 +3,12 @@ import React from "react";
 function SpinnerWhileLoading(props) {
   const spinnerType = props.spinnerType
     ? props.spinnerType
-    : "border text-secondary";
+    : "spinner-border text-secondary";
   return (
     <React.Fragment>
       {props.showSpinnerWhen && (
         <div className={props.className}>
-          <div className={`spinner-${spinnerType}`} role="status">
+          <div className={`${spinnerType}`} role="status">
             <span className="sr-only">Loading...</span>
           </div>
         </div>
