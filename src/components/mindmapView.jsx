@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getMindmap, saveMindmap } from "../services/mindmapService";
+import {
+  getMindmap,
+  saveMindmap,
+  incrementRevisions,
+} from "../services/mindmapService";
 import SpinnerWhileLoading from "./common/spinnerWhileLoading";
 
 function MindmapView(props) {
@@ -57,17 +61,10 @@ function MindmapView(props) {
       });
   }, [data]);
 
-  const incrementRevisions = async (e) => {
+  const doIncrementRevisions = async (e) => {
     e.preventDefault();
     setShowRevisionSpinner(true);
-    const mindmap = {
-      id: data.id,
-      title: data.title,
-      category: data.category,
-      revisions: data.revisions + 1,
-      branches: data.branches,
-    };
-    await saveMindmap(mindmap);
+    await incrementRevisions(data.id);
     await loadMindmap();
     setShowRevisionSpinner(false);
   };
@@ -84,11 +81,11 @@ function MindmapView(props) {
             <button
               type="button"
               className="btn btn-primary btn-sm"
-              onClick={incrementRevisions}
+              onClick={doIncrementRevisions}
             >
               {showRevisionSpinner && (
                 <span
-                  class="spinner-border spinner-border-sm"
+                  className="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"
                 ></span>

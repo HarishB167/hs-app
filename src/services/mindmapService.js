@@ -20,15 +20,14 @@ export async function saveMindmap(mindmap) {
   }
 }
 
-export async function deleteMindmap(id) {
-  const result = await http.delete("/mindmaps/" + id);
+export async function incrementRevisions(mindmapId) {
+  const result = await http.get(`/increment_revisions/${mindmapId}/`);
   return result.data;
 }
 
-export async function incrementRevisions(id, revisions) {
-  const result = await http.patch(`/mindmaps/${id}/`, {
-    revisions: revisions,
-  });
+export async function deleteMindmap(id) {
+  const result = await http.delete("/mindmaps/" + id);
+  return result.data;
 }
 
 export async function createBranch(mindmapId, branch) {
