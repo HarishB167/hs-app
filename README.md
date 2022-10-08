@@ -1,6 +1,6 @@
 # hs-app
 
-Working page link : https://mashelper.onrender.com/
+Working page link : https://hsapp.onrender.com/mindmaps
 
 ---------------------------------------
 # Getting Started with Create React App
